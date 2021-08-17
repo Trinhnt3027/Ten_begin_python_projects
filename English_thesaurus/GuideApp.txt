@@ -1,0 +1,10 @@
+[Function]
+    - Show the definition of the word.
+    - Show the possible words list if the input word doesn't exist.
+
+[Materials]
+    - 'data.json' file -> contains words definition.
+    - Module:
+        + json -> load json file
+        + difflib:
+            . get_close_matches -> get the close list of the word.
