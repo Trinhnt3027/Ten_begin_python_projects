@@ -1,0 +1,107 @@
+#:kivy 1.9.1
+
+<LoginScreen>:
+    GridLayout:
+        cols: 1
+        GridLayout:
+            cols: 1
+            padding: 15, 15
+            spacing: 15, 15
+            Label:
+                text: "User Login"
+            TextInput:
+                id: idUsername
+                hint_text: "Username"
+            TextInput:
+                id: idPassword
+                password: True
+                hint_text: "Password"
+            RelativeLayout:
+                Button:
+                    text: "Login"
+                    size_hint: 0.3, 0.6
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    on_release: root.login(root.ids.idUsername.text, root.ids.idPassword.text)
+            Label:
+                id: idLoginFail
+                text: ""
+        GridLayout:
+            cols: 2
+            size_hint: 0.2, 0.2
+            padding: 10, 10
+            spacing: 10, 0
+            Button:
+                text: "Forgot password?"
+                background_color: 1, 1, 1, 0
+                opacity: 1 if self.state == "normal" else 0.5
+                color: 0, 0.8, 1, 1
+            Button:
+                text: "Sign Up"
+                background_color: 1, 1, 1, 0
+                opacity: 1 if self.state == "normal" else 0.5
+                color: 0, 0.8, 1, 1
+                on_release: root.sign_up()
+
+<SignUpScreen>:
+    GridLayout:
+        cols: 1
+        padding: 15, 15
+        spacing: 15, 15
+        Label:
+            text: "Create a new accout!"
+        TextInput:
+            id: idUsername
+            hint_text: "Username"
+        TextInput:
+            id: idPw
+            password: True
+            hint_text: "Password"
+        Button:
+            text: "Submit"
+            on_release: root.add_user(root.ids.idUsername.text, root.ids.idPw.text)
+
+<SignUpSuccessScreen>:
+    GridLayout:
+        cols: 1
+        Label:
+            text: "Sign up success!"
+        Button:
+            text: "Login Page"
+            on_release: root.go_to_login()
+
+<LoginSuccessScreen>:
+    GridLayout:
+        cols: 1
+        padding: 15, 15
+        spacing: 10, 10
+        RelativeLayout:
+            ImageButton: 
+                on_press: root.logout()
+                source: "resource/logout_hover.png" if self.hovered else "resource/logout_nothover.png"
+                size_hint: 0.35, 0.35
+                pos_hint: {'center_x': 0.93, 'center_y': 0.8}
+        Label:
+            text: "How do you feel?"
+        TextInput:
+            id: idTextFeeling
+            hint_text: "Things to try: happy, sad, unloved"
+        Button:
+            text: "Enlighten me"
+            on_release: root.get_quote(root.ids.idTextFeeling.text)
+        ScrollView:
+            Label:
+                id: idTextResult
+                text: ""
+                text_size: self.width, None
+                size_hint_y: None
+                height: self.texture_size[1]
+
+<RootWidget>:
+    LoginScreen:
+        name: "login_screen"
+    SignUpScreen:
+        name: "sign_up_screen"
+    SignUpSuccessScreen:
+        name: "sign_up_success_screen"
+    LoginSuccessScreen:
+        name: "login_success_screen"
